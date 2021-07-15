@@ -1,0 +1,5 @@
+---
+# handlers file for angular-cli
+- name: build app 
+  shell: "ng build"
+  become: true

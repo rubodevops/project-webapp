@@ -1,0 +1,235 @@
+---
+- hosts: all
+  remote_user: root
+  tasks:
+
+    - name: update cache option
+      apt:
+        update_cache: yes
+        force_apt_get: yes
+        cache_valid_time: 3600
+      become: true
+
+      
+    - name: web-application package transfer
+      copy:
+        src: ../files/{{item}}
+        dest: /home/ubuntu 
+      with_items:
+        ['angular.json','browserslist','e2e','karma.conf.js','package.json','package-lock.json','README.md','tslint-to-eslint-config.log','tslint.json','tsconfig.spec.json','tsconfig.json','tsconfig.app.json','src']   
+      become: true    
+      
+   
+
+
+    - name: "Add nodejs apt key"
+      apt_key:
+        url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+        state: present
+      become: true
+
+    - name: "Add nodejs 12.x ppa for apt repo"
+      apt_repository:
+        repo: deb https://deb.nodesource.com/node_12.x focal main
+        update_cache: yes       
+      become: true
+
+    
+    
+    - name: "Install nodejs"
+      apt:
+        update_cache: yes
+        name: nodejs
+        state: present
+      become: true
+
+
+    - name: Install Angular.js
+      npm:
+        name: "@angular/cli@latest"  
+        global: yes
+        state: present 
+      become: true 
+      
+    
+    - name: install build-angular in dev dependency
+      ansible.builtin.command:
+        cmd: "sudo npm install --save-dev @angular-devkit/build-angular"
+      become: true
+
+
+
+
+    - name: build app 
+      shell: "ng build"
+      become: true
+    
+    
+    # - name: run app 
+    #   shell: "ng serve --host=0.0.0.0 --disable-host-check"
+    #   become: true     
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    # - name: Install npm
+    #   apt:
+    #     # update_cache: yes
+    #     name: npm
+    #     state: present
+    #   become: true  
+
+
+    
+
+
+
+    # - name: "Install module build-angular"
+    #   npm:
+    #     name: "@angular-devkit/build-angular"
+    #     global: yes
+    #     production: false
+    #   become: true  
+
+
+    # - name: "install module comiler-cli"
+    #   npm:
+    #     name: "@angular/compiler-cli"
+    #     global: yes
+    #     production: false
+    #   become: true  
+     
+
+
+
+
+
+    # - name: "Install NPM-distributed command-line tools"
+    #   npm:
+    #     global: yes
+    #     name: firebase-tools 
+        
+    #     # path: /usr/lib/node_modules/@angular/cli/node_modules/
+    #   become: true 
+
+
+
+           
+
+
+
+
+
+    # - name: Execute the script
+    #   command: sh {{ ansible_env.HOME }}/.nvm/nvm.sh
+
+    # - name: Get the value of the environment variable we just added
+    #   shell: source ~/.bash_profile && echo $ENV_VAR
+    #   register: env_var_updated
+    #   args:
+    #   executable: /bin/bash
+    
+    
+    
+  
+
+    
+
+
+    
+
+    
+
+
+
+    # - name: Install build essntial
+    #   apt:
+    #     name: nodejs build-essential
+    #     state: present
+    #   become: true  
+
+
+
+   
+
+
+
+     
+    # - name: "NodeJS | Import exports"
+    #   lineinfile:
+    #     dest: "~/{{ item.item.item }}"
+    #     line: "export PATH=$PATH:$(npm config --global get prefix)/bin"
+    #     state: present
+    #   with_items:
+    #     - "{{ available_shell_profiles.results }}"
+    #   when: item.item.stat.exists|bool == true
+
+
+
+
+
+
+
+
+  # - name: "Install NPM-distributed command-line tools"
+  #     npm:
+  #       global: yes
+  #       production: false
+  #       name: 
+  #         - "@angular-devkit/build-angular"
+  #         - "@angular/compiler-cli"
+  #         - "typescript"
+  #       # path: /usr/lib/node_modules/@angular/cli/node_modules/
+  #     become: true  
